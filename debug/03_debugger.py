@@ -3,6 +3,7 @@ import nltk
 from collections import Counter
 from nltk.tokenize import word_tokenize
 
+# nltk: Natural Language Toolkit
 
 def get_word_list(raw_text: str) -> list[str]:
     """문장부호를 제외한 문자열들을 골라서 리스트로 반환"""
@@ -25,11 +26,21 @@ def download_nltk_data():
 
 download_nltk_data()
 
+if len(sys.argv) < 2:
+    print(f"Usage: python {sys.argv[0]} <text file>")
+    sys.exit(0)
+
 text_file = sys.argv[1]
+
+# 이 부분에서 빈 파일이 들어오면 에러 발생
 with open(text_file) as f:
     # 모든 단어들을 소문자로 변경
     text = f.read().lower()
     wl = get_word_list(text)
+    
+    if len(wl) == 0:
+        print("No words found!")
+        sys.exit(0)
 
     # Counter를 이용한 단어 수 세기
     cnt = Counter(wl)
